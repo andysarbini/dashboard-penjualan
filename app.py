@@ -13,23 +13,23 @@ st.title("📊 Dashboard Analisis & Prediksi Penjualan")
 uploaded_file = st.file_uploader("📤 Upload file penjualan (CSV)", type="csv")
 
 if uploaded_file:
-    df = pd.read_csv(uploaded_file, parse_dates=['tanggal'])
-    df = df.sort_values('tanggal')
+    df = pd.read_csv(uploaded_file, parse_dates=['Tanggal'])
+    df = df.sort_values('Tanggal')
 
     st.subheader("📌 Ringkasan Penjualan")
-    total = df['total'].sum()
-    daily_avg = df.groupby('tanggal')['total'].sum().mean()
+    total = df['Total'].sum()
+    daily_avg = df.groupby('Tanggal')['Total'].sum().mean()
     col1, col2 = st.columns(2)
     col1.metric("Total Penjualan", f"Rp {total:,.0f}")
     col2.metric("Rata-rata Harian", f"Rp {daily_avg:,.0f}")
 
     st.subheader("📆 Penjualan Harian")
-    daily_sales = df.groupby('tanggal')['total'].sum()
+    daily_sales = df.groupby('Tanggal')['Total'].sum()
     st.line_chart(daily_sales)
 
     st.subheader("📦 Penjualan per Kategori")
     fig_kat, ax_kat = plt.subplots()
-    df.groupby('kategori')['total'].sum().plot(kind='bar', ax=ax_kat, color='skyblue')
+    df.groupby('Kategori')['Total'].sum().plot(kind='bar', ax=ax_kat, color='skyblue')
     ax_kat.set_ylabel("Total Penjualan")
     st.pyplot(fig_kat)
 
